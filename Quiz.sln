@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quiz.Web", "Quiz.Web\Quiz.W
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quiz.Data", "Quiz.Data\Quiz.Data.csproj", "{9303ACE4-BA43-4D02-AADB-04BA5E49F7F4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quiz.Models", "Quiz.Models\Quiz.Models.csproj", "{A71984A2-E5F1-40E9-A58D-6BC072A5F0D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quiz.Services", "Quiz.Services\Quiz.Services.csproj", "{E51D09BF-147A-4DB9-9D33-C136B6FA0AE8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{9303ACE4-BA43-4D02-AADB-04BA5E49F7F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9303ACE4-BA43-4D02-AADB-04BA5E49F7F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9303ACE4-BA43-4D02-AADB-04BA5E49F7F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A71984A2-E5F1-40E9-A58D-6BC072A5F0D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A71984A2-E5F1-40E9-A58D-6BC072A5F0D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A71984A2-E5F1-40E9-A58D-6BC072A5F0D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A71984A2-E5F1-40E9-A58D-6BC072A5F0D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E51D09BF-147A-4DB9-9D33-C136B6FA0AE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E51D09BF-147A-4DB9-9D33-C136B6FA0AE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E51D09BF-147A-4DB9-9D33-C136B6FA0AE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E51D09BF-147A-4DB9-9D33-C136B6FA0AE8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
