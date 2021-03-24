@@ -12,6 +12,8 @@ namespace Quiz.Models
         public int Id { get; set; }
 
         public string Title { get; set; }
+        public int QuizId { get; set; }
+        public Quiz Quiz { get; set; }
 
         public ICollection<Answer> Answers { get; set; }
 

@@ -21,9 +21,11 @@ namespace Quiz.ConsoleUI
 
             //var dbContect = serviceProvider.GetService<ApplicationDbContext>();
 
-            var quizServices = serviceProvider.GetService<IQuizService>();
+            //var quizServices = serviceProvider.GetService<IQuizService>();
+            var questionServices = serviceProvider.GetService<IQuestionService>();
 
-            quizServices.Add("C# DB");
+            //quizServices.Add("C# DB");
+            questionServices.Add("Waht is Entity Framework", 1);
 
 
         }
@@ -42,6 +44,7 @@ namespace Quiz.ConsoleUI
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddTransient<IQuizService, QuizService>();
+            services.AddTransient<IQuestionService, QuestionService>();
         }
     }
 }
