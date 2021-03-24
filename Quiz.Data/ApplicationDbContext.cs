@@ -16,5 +16,15 @@ namespace Quiz.Data
         public DbSet<Models.Quiz> Quizzes { get; set; }
         public DbSet<Answer> Answers { get; set; }
         public DbSet<Question> Questions { get; set; }
+        public DbSet<UserAnswer> UserAnswers { get; set; }
+
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<UserAnswer>()
+                .HasKey(x => new { x.QuizId, x.UserId });
+
+            base.OnModelCreating(builder);
+        }
     }
 }
