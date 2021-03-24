@@ -13,4 +13,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Quiz.Models\Quiz.Models.csproj" />
+  </ItemGroup>
+
 </Project>
