@@ -7,11 +7,14 @@ namespace Quiz.Models
         public Question()
         {
             this.Answers = new HashSet<Answer>();
+            this.UserAnswers = new HashSet<UserAnswer>();
         }
         public int Id { get; set; }
 
         public string Title { get; set; }
 
         public ICollection<Answer> Answers { get; set; }
+
+        public ICollection<UserAnswer> UserAnswers { get; set; }
     }
 }

@@ -372,7 +372,7 @@ namespace Quiz.Data.Migrations
             modelBuilder.Entity("Quiz.Models.UserAnswer", b =>
                 {
                     b.HasOne("Quiz.Models.Answer", "Answer")
-                        .WithMany()
+                        .WithMany("UserAnswers")
                         .HasForeignKey("AnswerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -400,6 +400,11 @@ namespace Quiz.Data.Migrations
                     b.Navigation("Question");
 
                     b.Navigation("Quiz");
+                });
+
+            modelBuilder.Entity("Quiz.Models.Answer", b =>
+                {
+                    b.Navigation("UserAnswers");
                 });
 
             modelBuilder.Entity("Quiz.Models.Question", b =>
