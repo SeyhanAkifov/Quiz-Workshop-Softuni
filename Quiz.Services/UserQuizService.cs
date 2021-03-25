@@ -1,5 +1,6 @@
 ﻿using Quiz.Data;
 using Quiz.Models;
+using Quiz.Services.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,5 +31,28 @@ namespace Quiz.Services
 
            
         }
+
+        public void BulkAddUserAnswer(QuizInputModel quizInputModel)
+        {
+            var userAnswers = new List<UserAnswer>();
+
+            foreach (var question in quizInputModel.Questions)
+            {
+                var userAnswer = new UserAnswer
+                {
+                    IdentityUserId = quizInputModel.UserId,
+                    QuizId = quizInputModel.QuizId,
+                    AnswerId = question.AnswerId,
+                    QuestionId = question.QuestionId
+                };
+
+                userAnswers.Add(userAnswer);
+            }
+
+            this.dbContext.AddRange(userAnswers);
+            this.dbContext.SaveChanges();
+        }
+
+
     }
 }
