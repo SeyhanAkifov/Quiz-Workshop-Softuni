@@ -1,4 +1,5 @@
-﻿using Quiz.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Quiz.Data;
 using Quiz.Models;
 using Quiz.Services.ViewModels;
 using System;
@@ -51,6 +52,21 @@ namespace Quiz.Services
 
             this.dbContext.AddRange(userAnswers);
             this.dbContext.SaveChanges();
+        }
+
+        public int GetUserResult(string userId, int quizId)
+        {
+            var totalPoints = this.dbContext.Quizzes
+                .Include(x => x.Questions)
+                .ThenInclude(x => x.Answers)
+                .ThenInclude(x => x.UserAnswers)
+                .Where(x => x.Id == quizId &&
+                x.UserAnswers.Any(y => y.IdentityUserId == userId))
+                .SelectMany(x => x.UserAnswers)
+                .Where(x => x.Answer.IsCorrect)
+                .Sum(x => x.Answer.Points);
+
+            return totalPoints;
         }
 
 

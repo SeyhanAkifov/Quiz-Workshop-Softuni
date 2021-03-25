@@ -21,30 +21,34 @@ namespace Quiz.ConsoleUI
 
             //var dbContect = serviceProvider.GetService<ApplicationDbContext>();
 
-            var quizServices = serviceProvider.GetService<IQuizService>();
-            //var questionServices = serviceProvider.GetService<IQuestionService>();
-            //var answerServices = serviceProvider.GetService<IAnswerService>();
-            //var userAnswerServices = serviceProvider.GetService<IUserQuizService>();
+           // var quizServices = serviceProvider.GetService<IQuizService>();
+            var questionServices = serviceProvider.GetService<IQuestionService>();
+            var answerServices = serviceProvider.GetService<IAnswerService>();
+            var userAnswerServices = serviceProvider.GetService<IUserQuizService>();
 
             //quizServices.Add("C# DB");
             //answerServices.Add("It is ORM",1, 5, true);
             //answerServices.Add("It is a OS",1, 0, false);
-            //userAnswerServices.AddUserAnswer("f115ecbc-c75e-47ec-b861-eceacd2c28f2", 1,1,3);
+            //questionServices.Add("2*2", 1);
+            //answerServices.Add("4", 14, 5, true);
+            userAnswerServices.AddUserAnswer("f115ecbc-c75e-47ec-b861-eceacd2c28f2", 1,1,4);
 
+            //var quiz = quizServices.GetQuizById(1);
+            var userPoints = userAnswerServices.GetUserResult("f115ecbc-c75e-47ec-b861-eceacd2c28f2", 1);
 
-            var quiz = quizServices.GetQuizById(1);
+            Console.WriteLine(userPoints);
 
-            Console.WriteLine(quiz.Title);
+            //Console.WriteLine(quiz.Title);
 
-            foreach (var question in quiz.Questions)
-            {
-                Console.WriteLine(question.Title);
+            //foreach (var question in quiz.Questions)
+            //{
+            //    Console.WriteLine(question.Title);
 
-                foreach (var answer in question.Answers)
-                {
-                    Console.WriteLine(answer.Title);
-                }
-            }
+            //    foreach (var answer in question.Answers)
+            //    {
+            //        Console.WriteLine(answer.Title);
+            //    }
+            //}
 
         }
 
