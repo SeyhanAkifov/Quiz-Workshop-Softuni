@@ -23,7 +23,7 @@ namespace Quiz.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<UserAnswer>()
-                .HasKey(x => new { x.QuizId, x.UserId });
+                .HasKey(x => new { x.QuizId, x.IdentityUserId });
 
             builder.Entity<Answer>()
                 .HasOne(x => x.Question)

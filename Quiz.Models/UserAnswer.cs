@@ -9,7 +9,7 @@ namespace Quiz.Models
 {
     public class UserAnswer
     {
-        public string UserId { get; set; }
+        public string IdentityUserId { get; set; }
 
         public IdentityUser IdentityUser { get; set; }
 

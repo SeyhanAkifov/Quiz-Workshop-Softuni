@@ -21,12 +21,30 @@ namespace Quiz.ConsoleUI
 
             //var dbContect = serviceProvider.GetService<ApplicationDbContext>();
 
-            //var quizServices = serviceProvider.GetService<IQuizService>();
-            var questionServices = serviceProvider.GetService<IQuestionService>();
+            var quizServices = serviceProvider.GetService<IQuizService>();
+            //var questionServices = serviceProvider.GetService<IQuestionService>();
+            //var answerServices = serviceProvider.GetService<IAnswerService>();
+            //var userAnswerServices = serviceProvider.GetService<IUserQuizService>();
 
             //quizServices.Add("C# DB");
-            questionServices.Add("Waht is Entity Framework", 1);
+            //answerServices.Add("It is ORM",1, 5, true);
+            //answerServices.Add("It is a OS",1, 0, false);
+            //userAnswerServices.AddUserAnswer("f115ecbc-c75e-47ec-b861-eceacd2c28f2", 1,1,3);
 
+
+            var quiz = quizServices.GetQuizById(1);
+
+            Console.WriteLine(quiz.Title);
+
+            foreach (var question in quiz.Questions)
+            {
+                Console.WriteLine(question.Title);
+
+                foreach (var answer in question.Answers)
+                {
+                    Console.WriteLine(answer.Title);
+                }
+            }
 
         }
 
@@ -45,6 +63,8 @@ namespace Quiz.ConsoleUI
 
             services.AddTransient<IQuizService, QuizService>();
             services.AddTransient<IQuestionService, QuestionService>();
+            services.AddTransient<IAnswerService, AnswerService>();
+            services.AddTransient<IUserQuizService, UserQuizService>();
         }
     }
 }
