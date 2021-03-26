@@ -9,7 +9,7 @@ namespace Quiz.Services
 {
     public interface  IQuizService
     {
-        void Add(string title);
+        int Add(string title);
 
         public QuizViewModel GetQuizById(int quizId);
     }

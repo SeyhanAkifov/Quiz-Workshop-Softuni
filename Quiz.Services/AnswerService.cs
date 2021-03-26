@@ -17,7 +17,7 @@ namespace Quiz.Services
         }
 
 
-        public int Add(string title, int questionId, int points, bool isCorrect)
+        public int Add(string title,int points, bool isCorrect, int questionId )
         {
             var answer = new Answer
             {

@@ -2,10 +2,13 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using Quiz.Data;
 using Quiz.Services;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Text.Json;
 
 namespace Quiz.ConsoleUI
 {
@@ -19,6 +22,9 @@ namespace Quiz.ConsoleUI
 
             var serviceProvider =  serviceCollection.BuildServiceProvider();
 
+            var json = File.ReadAllText("EF-Core-Quiz.json");
+           var questions = JsonConvert.DeserializeObject<IEnumerable<JsonQuestion>>(json);
+
 
 
 
@@ -30,7 +36,20 @@ namespace Quiz.ConsoleUI
             var quizServices = serviceProvider.GetService<IQuizService>();
             var questionServices = serviceProvider.GetService<IQuestionService>();
             var answerServices = serviceProvider.GetService<IAnswerService>();
-            var userAnswerServices = serviceProvider.GetService<IUserQuizService>();
+            //var userAnswerServices = serviceProvider.GetService<IUserQuizService>();
+
+
+            var quizId = quizServices.Add("EF Core Test");
+
+            foreach (var question in questions)
+            {
+                var questionId = questionServices.Add(question.Question, quizId);
+
+                foreach (var answer in question.Answers)
+                {
+                    answerServices.Add(answer.Answer, answer.Correct ? 1 : 0, answer.Correct, questionId);
+                }
+            }
 
             //quizServices.Add("C# DB");
             //answerServices.Add("It is ORM",1, 5, true);
