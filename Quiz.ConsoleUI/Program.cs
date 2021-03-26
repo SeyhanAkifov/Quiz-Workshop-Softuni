@@ -19,9 +19,15 @@ namespace Quiz.ConsoleUI
 
             var serviceProvider =  serviceCollection.BuildServiceProvider();
 
+
+
+
+            //var dbContext = serviceProvider.GetService<ApplicationDbContext>();
+            //dbContext.Database.Migrate();
+
             //var dbContect = serviceProvider.GetService<ApplicationDbContext>();
 
-           // var quizServices = serviceProvider.GetService<IQuizService>();
+            var quizServices = serviceProvider.GetService<IQuizService>();
             var questionServices = serviceProvider.GetService<IQuestionService>();
             var answerServices = serviceProvider.GetService<IAnswerService>();
             var userAnswerServices = serviceProvider.GetService<IUserQuizService>();
@@ -31,12 +37,12 @@ namespace Quiz.ConsoleUI
             //answerServices.Add("It is a OS",1, 0, false);
             //questionServices.Add("2*2", 1);
             //answerServices.Add("4", 14, 5, true);
-            userAnswerServices.AddUserAnswer("f115ecbc-c75e-47ec-b861-eceacd2c28f2", 1,1,4);
+            //userAnswerServices.AddUserAnswer("f115ecbc-c75e-47ec-b861-eceacd2c28f2", 1,1,4);
 
             //var quiz = quizServices.GetQuizById(1);
-            var userPoints = userAnswerServices.GetUserResult("f115ecbc-c75e-47ec-b861-eceacd2c28f2", 1);
+            //var userPoints = userAnswerServices.GetUserResult("f115ecbc-c75e-47ec-b861-eceacd2c28f2", 1);
 
-            Console.WriteLine(userPoints);
+            //Console.WriteLine(userPoints);
 
             //Console.WriteLine(quiz.Title);
 

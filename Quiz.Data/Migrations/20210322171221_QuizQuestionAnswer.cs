@@ -43,7 +43,7 @@ namespace Quiz.Data.Migrations
                 oldMaxLength: 128);
 
             migrationBuilder.CreateTable(
-                name: "Quizzes",
+                name: "Quizes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -52,7 +52,7 @@ namespace Quiz.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Quizzes", x => x.Id);
+                    table.PrimaryKey("PK_Quizes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -68,9 +68,9 @@ namespace Quiz.Data.Migrations
                 {
                     table.PrimaryKey("PK_Questions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Questions_Quizzes_QuizId",
+                        name: "FK_Questions_Quizes_QuizId",
                         column: x => x.QuizId,
-                        principalTable: "Quizzes",
+                        principalTable: "Quizes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -82,7 +82,7 @@ namespace Quiz.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsCorrect = table.Column<bool>(type: "bit", nullable: false),
+                    IsCorrent = table.Column<bool>(type: "bit", nullable: false),
                     Points = table.Column<int>(type: "int", nullable: false),
                     QuestionId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -117,7 +117,7 @@ namespace Quiz.Data.Migrations
                 name: "Questions");
 
             migrationBuilder.DropTable(
-                name: "Quizzes");
+                name: "Quizes");
 
             migrationBuilder.AlterColumn<string>(
                 name: "Name",

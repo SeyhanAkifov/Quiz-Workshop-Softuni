@@ -10,8 +10,8 @@ using Quiz.Data;
 namespace Quiz.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210324082618_QuizQuestionAnswer")]
-    partial class QuizQuestionAnswer
+    [Migration("20210323162335_ModelUpdates")]
+    partial class ModelUpdates
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -230,7 +230,7 @@ namespace Quiz.Data.Migrations
                     b.Property<int>("Points")
                         .HasColumnType("int");
 
-                    b.Property<int?>("QuestionId")
+                    b.Property<int>("QuestionId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -250,7 +250,7 @@ namespace Quiz.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("QuizId")
+                    b.Property<int>("QuizId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -275,7 +275,34 @@ namespace Quiz.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Quizzes");
+                    b.ToTable("Quizes");
+                });
+
+            modelBuilder.Entity("Quiz.Models.UserAnswer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("AnswerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("IdentityUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("QuestionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AnswerId");
+
+                    b.HasIndex("IdentityUserId");
+
+                    b.HasIndex("QuestionId");
+
+                    b.ToTable("UserAnswers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -331,21 +358,59 @@ namespace Quiz.Data.Migrations
 
             modelBuilder.Entity("Quiz.Models.Answer", b =>
                 {
-                    b.HasOne("Quiz.Models.Question", null)
+                    b.HasOne("Quiz.Models.Question", "Question")
                         .WithMany("Answers")
-                        .HasForeignKey("QuestionId");
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Question");
                 });
 
             modelBuilder.Entity("Quiz.Models.Question", b =>
                 {
-                    b.HasOne("Quiz.Models.Quiz", null)
+                    b.HasOne("Quiz.Models.Quiz", "Quiz")
                         .WithMany("Questions")
-                        .HasForeignKey("QuizId");
+                        .HasForeignKey("QuizId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Quiz");
+                });
+
+            modelBuilder.Entity("Quiz.Models.UserAnswer", b =>
+                {
+                    b.HasOne("Quiz.Models.Answer", "Answer")
+                        .WithMany("UserAnswers")
+                        .HasForeignKey("AnswerId");
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
+                        .WithMany()
+                        .HasForeignKey("IdentityUserId");
+
+                    b.HasOne("Quiz.Models.Question", "Question")
+                        .WithMany("UserAnswers")
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Answer");
+
+                    b.Navigation("IdentityUser");
+
+                    b.Navigation("Question");
+                });
+
+            modelBuilder.Entity("Quiz.Models.Answer", b =>
+                {
+                    b.Navigation("UserAnswers");
                 });
 
             modelBuilder.Entity("Quiz.Models.Question", b =>
                 {
                     b.Navigation("Answers");
+
+                    b.Navigation("UserAnswers");
                 });
 
             modelBuilder.Entity("Quiz.Models.Quiz", b =>

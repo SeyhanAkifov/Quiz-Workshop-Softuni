@@ -10,8 +10,8 @@ using Quiz.Data;
 namespace Quiz.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210325130628_deleteCompositeKeyOnUserAnswers")]
-    partial class deleteCompositeKeyOnUserAnswers
+    [Migration("20210322182618_FixIsCorrectColumnRestictCascadeDeletion")]
+    partial class FixIsCorrectColumnRestictCascadeDeletion
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -275,33 +275,26 @@ namespace Quiz.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Quizzes");
+                    b.ToTable("Quizes");
                 });
 
             modelBuilder.Entity("Quiz.Models.UserAnswer", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("AnswerId")
-                        .HasColumnType("int");
-
                     b.Property<string>("IdentityUserId")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("QuestionId")
-                        .HasColumnType("int");
 
                     b.Property<int>("QuizId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<int>("AnswerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("QuestionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("IdentityUserId", "QuizId");
 
                     b.HasIndex("AnswerId");
-
-                    b.HasIndex("IdentityUserId");
 
                     b.HasIndex("QuestionId");
 
@@ -393,7 +386,9 @@ namespace Quiz.Data.Migrations
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
                         .WithMany()
-                        .HasForeignKey("IdentityUserId");
+                        .HasForeignKey("IdentityUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Quiz.Models.Question", "Question")
                         .WithMany("UserAnswers")

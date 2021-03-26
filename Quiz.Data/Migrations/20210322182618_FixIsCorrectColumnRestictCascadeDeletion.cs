@@ -2,10 +2,15 @@
 
 namespace Quiz.Data.Migrations
 {
-    public partial class UpdateAnswers : Migration
+    public partial class FixIsCorrectColumnRestictCascadeDeletion : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.RenameColumn(
+                name: "IsCorrent",
+                table: "Answers",
+                newName: "IsCorrect");
+
             migrationBuilder.AlterColumn<int>(
                 name: "QuizId",
                 table: "Questions",
@@ -29,6 +34,11 @@ namespace Quiz.Data.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.RenameColumn(
+                name: "IsCorrect",
+                table: "Answers",
+                newName: "IsCorrent");
+
             migrationBuilder.AlterColumn<int>(
                 name: "QuizId",
                 table: "Questions",

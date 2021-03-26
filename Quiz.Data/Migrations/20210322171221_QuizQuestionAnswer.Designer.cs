@@ -10,8 +10,8 @@ using Quiz.Data;
 namespace Quiz.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210324111641_UserAnswerCompositeKey")]
-    partial class UserAnswerCompositeKey
+    [Migration("20210322171221_QuizQuestionAnswer")]
+    partial class QuizQuestionAnswer
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -224,7 +224,7 @@ namespace Quiz.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("IsCorrect")
+                    b.Property<bool>("IsCorrent")
                         .HasColumnType("bit");
 
                     b.Property<int>("Points")
@@ -275,35 +275,7 @@ namespace Quiz.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Quizzes");
-                });
-
-            modelBuilder.Entity("Quiz.Models.UserAnswer", b =>
-                {
-                    b.Property<int>("QuizId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AnswerId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("IdentityUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("QuestionId")
-                        .HasColumnType("int");
-
-                    b.HasKey("QuizId", "UserId");
-
-                    b.HasIndex("AnswerId");
-
-                    b.HasIndex("IdentityUserId");
-
-                    b.HasIndex("QuestionId");
-
-                    b.ToTable("UserAnswers");
+                    b.ToTable("Quizes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -369,39 +341,6 @@ namespace Quiz.Data.Migrations
                     b.HasOne("Quiz.Models.Quiz", null)
                         .WithMany("Questions")
                         .HasForeignKey("QuizId");
-                });
-
-            modelBuilder.Entity("Quiz.Models.UserAnswer", b =>
-                {
-                    b.HasOne("Quiz.Models.Answer", "Answer")
-                        .WithMany()
-                        .HasForeignKey("AnswerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
-                        .WithMany()
-                        .HasForeignKey("IdentityUserId");
-
-                    b.HasOne("Quiz.Models.Question", "Question")
-                        .WithMany()
-                        .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Quiz.Models.Quiz", "Quiz")
-                        .WithMany()
-                        .HasForeignKey("QuizId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Answer");
-
-                    b.Navigation("IdentityUser");
-
-                    b.Navigation("Question");
-
-                    b.Navigation("Quiz");
                 });
 
             modelBuilder.Entity("Quiz.Models.Question", b =>

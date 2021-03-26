@@ -8,7 +8,7 @@ namespace Quiz.Services
 {
     public interface IUserQuizService
     {
-        void AddUserAnswer(string userId, int quizId , int questionId, int answerId);
+        void AddUserAnswer(string userId,int questionId, int answerId);
 
         public int GetUserResult(string userId, int quizId);
     }

@@ -17,14 +17,13 @@ namespace Quiz.Services
         {
             this.dbContext = dbContext;
         }
-        public void AddUserAnswer(string userId, int quizId, int questionId, int answerId)
+        public void AddUserAnswer(string userId, int questionId,int answerId)
         {
             var userAnswer = new UserAnswer
             {
                 IdentityUserId = userId,
-                QuizId = quizId,
-                QuestionId = questionId,
-                AnswerId = answerId
+                AnswerId = answerId,
+                QuestionId = questionId
             };
 
             this.dbContext.UserAnswers.Add(userAnswer);
@@ -42,7 +41,6 @@ namespace Quiz.Services
                 var userAnswer = new UserAnswer
                 {
                     IdentityUserId = quizInputModel.UserId,
-                    QuizId = quizInputModel.QuizId,
                     AnswerId = question.AnswerId,
                     QuestionId = question.QuestionId
                 };
@@ -56,14 +54,8 @@ namespace Quiz.Services
 
         public int GetUserResult(string userId, int quizId)
         {
-            var totalPoints = this.dbContext.Quizzes
-                .Include(x => x.Questions)
-                .ThenInclude(x => x.Answers)
-                .ThenInclude(x => x.UserAnswers)
-                .Where(x => x.Id == quizId &&
-                x.UserAnswers.Any(y => y.IdentityUserId == userId))
-                .SelectMany(x => x.UserAnswers)
-                .Where(x => x.Answer.IsCorrect)
+            var totalPoints = this.dbContext.UserAnswers
+                .Where(x => x.IdentityUserId == userId && x.Question.QuizId == quizId)
                 .Sum(x => x.Answer.Points);
 
             return totalPoints;
