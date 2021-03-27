@@ -12,10 +12,13 @@ namespace Quiz.Web.Controllers
     public class QuizController : Controller
     {
         private readonly IQuizService quizService;
+        private readonly IUserQuizService userQuizService;
 
-        public QuizController(IQuizService quizService)
+        public QuizController(IQuizService quizService, IUserQuizService userQuizService)
         {
             this.quizService = quizService;
+            this.userQuizService = userQuizService;
+            this.userQuizService = userQuizService;
         }
 
         public IActionResult Test(int id)
@@ -26,9 +29,23 @@ namespace Quiz.Web.Controllers
             return this.View(viewModel);
         }
 
+        public IActionResult Submit(int id)
+        {
+            foreach (var item in this.Request.Form)
+            {
+                var questionId = int.Parse(item.Key.Replace("q_", string.Empty));
+                var answerId = int.Parse(item.Value);
+                this.userQuizService.AddUserAnswer(this.User.Identity.Name, questionId, answerId);
+            }
+
+
+            return this.RedirectToAction("Results", new { id });
+        }
+
         public IActionResult Results(int id)
         {
-            return this.View();
+            var points = this.userQuizService.GetUserResult(this.User.Identity.Name, id);
+            return this.View(points);
         }
     }
 }

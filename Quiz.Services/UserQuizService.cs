@@ -17,16 +17,14 @@ namespace Quiz.Services
         {
             this.dbContext = dbContext;
         }
-        public void AddUserAnswer(string userId, int questionId,int answerId)
+        public void AddUserAnswer(string username, int questionId,int answerId)
         {
-            var userAnswer = new UserAnswer
-            {
-                IdentityUserId = userId,
-                AnswerId = answerId,
-                QuestionId = questionId
-            };
 
-            this.dbContext.UserAnswers.Add(userAnswer);
+            string userId = this.dbContext.Users.Where(x => x.UserName == username).Select(x => x.Id).FirstOrDefault();
+            var userAnswers = dbContext.UserAnswers.FirstOrDefault(x => x.IdentityUserId == userId && x.QuestionId == questionId);
+
+            userAnswers.AnswerId = answerId;
+            
             this.dbContext.SaveChanges();
 
            
@@ -52,8 +50,11 @@ namespace Quiz.Services
             this.dbContext.SaveChanges();
         }
 
-        public int GetUserResult(string userId, int quizId)
+        public int GetUserResult(string username, int quizId)
         {
+
+            string userId = this.dbContext.Users.Where(x => x.UserName == username).Select(x => x.Id).FirstOrDefault();
+
             var totalPoints = this.dbContext.UserAnswers
                 .Where(x => x.IdentityUserId == userId && x.Question.QuizId == quizId)
                 .Sum(x => x.Answer.Points);
