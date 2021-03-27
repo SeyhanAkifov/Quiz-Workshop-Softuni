@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Quiz.Data;
 using Quiz.Services.Models;
+using Quiz.Services.ViewModels;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Quiz.Services
@@ -51,8 +53,47 @@ namespace Quiz.Services
             };
 
             return quizViewModel;
-        } 
+        }
 
-       
+        public IEnumerable<UserQuizWiewModel> GetQuizzesByUsername(string username)
+        {
+            var quizzes = dbContext.Quizzes.Select(x => new UserQuizWiewModel()
+            {
+                Id = x.Id,
+                Title = x.Title
+            }).ToList();
+
+
+            foreach (var quiz in quizzes)
+            {
+                var countQuestions = dbContext.UserAnswers
+                    .Count(y => y.IdentityUser.UserName == username
+                    && y.Question.QuizId == quiz.Id);
+
+                if (countQuestions == 0)
+                {
+                    quiz.Status = Quizstatus.NotStarted;
+                    continue;
+                }
+
+                var countAnswered = dbContext.UserAnswers
+                    .Count(y => y.IdentityUser.UserName == username
+                    && y.Question.QuizId == quiz.Id
+                    && y.AnswerId.HasValue);
+
+                if (countAnswered == countQuestions)
+                {
+                    quiz.Status = Quizstatus.Finished;
+                }
+                else
+                {
+                    quiz.Status = Quizstatus.InProgress;
+                    
+                }
+
+
+            }
+                return quizzes;
+        }
     }
 }
