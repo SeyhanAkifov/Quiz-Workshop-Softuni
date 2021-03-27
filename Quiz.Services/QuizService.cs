@@ -48,8 +48,12 @@ namespace Quiz.Services
                         Id = y.Id,
                         Title = y.Title
 
-                    }).ToList()
-                }).ToList()
+                    })
+                    .OrderBy(x => Guid.NewGuid())
+                    .ToList()
+                })
+                .OrderBy(x => Guid.NewGuid())
+                .ToList()
             };
 
             return quizViewModel;
