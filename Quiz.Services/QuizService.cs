@@ -48,8 +48,8 @@ namespace Quiz.Services
                         Id = y.Id,
                         Title = y.Title
 
-                    })
-                })
+                    }).ToList()
+                }).ToList()
             };
 
             return quizViewModel;
