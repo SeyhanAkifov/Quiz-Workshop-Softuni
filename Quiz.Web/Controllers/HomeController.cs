@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Quiz.Services;
 using Quiz.Web.Models;
 using System;
 using System.Collections.Generic;
@@ -11,16 +12,20 @@ namespace Quiz.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IQuizService quizService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IQuizService quizService)
         {
-            _logger = logger;
+            this.quizService = quizService;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var username = this.User?.Identity?.Name;
+
+            
+            var userQuizzes = this.quizService.GetQuizzesByUsername(username);
+            return View(userQuizzes);
         }
 
         public IActionResult Privacy()
