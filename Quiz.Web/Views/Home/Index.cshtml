@@ -22,15 +22,15 @@
                <td>
                    @if (quiz.Status == Quiz.Services.ViewModels.Quizstatus.NotStarted)
                    {
-                       <a href="" class="btn btn-success">Start test</a>
+                       <a href="/Quiz/Test/@quiz.Id" class="btn btn-success">Start test</a>
                    }
                    else if (quiz.Status == Quiz.Services.ViewModels.Quizstatus.InProgress)
                    {
-                       <a href="" class="btn btn-warning">Contunue test</a>
+                       <a href="/Quiz/Test/@quiz.Id" class="btn btn-warning">Contunue test</a>
                    }
                    else
                    {
-                       <a href="" class="btn btn-secondary">View results</a>
+                       <a href="/Quiz/Results/@quiz.Id" class="btn btn-secondary">View results</a>
                    }
                </td>
            </tr>

@@ -95,5 +95,32 @@ namespace Quiz.Services
             }
                 return quizzes;
         }
+
+        public void StartQuiz(string username, int quizId)
+        {
+            if (dbContext.UserAnswers.Any(x => x.IdentityUser.UserName == username && x.Question.QuizId == quizId))
+            {
+                return;
+            }
+
+            string userId = this.dbContext.Users.Where(x => x.UserName == username).Select(x => x.Id).FirstOrDefault();
+
+            var questions = dbContext.Questions
+                .Where(x => x.QuizId == quizId)
+                .Select(x => new { x.Id}).ToList();
+
+            foreach (var question in questions)
+            {
+                dbContext.UserAnswers.Add(new Quiz.Models.UserAnswer
+                {
+                    AnswerId = null,
+                    IdentityUserId = userId,
+                    QuestionId = question.Id
+                });
+
+            }
+
+            dbContext.SaveChanges();
+        }
     }
 }
